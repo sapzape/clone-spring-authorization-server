@@ -32,7 +32,6 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class JwkSetEndpointFilter extends OncePerRequestFilter {
-
 	static final String DEFAULT_JWK_SET_URI = "/oauth2/jwks";
 	private final RequestMatcher requestMatcher = new AntPathRequestMatcher(DEFAULT_JWK_SET_URI, GET.name());
 	private final JWKSet jwkSet;
@@ -43,16 +42,17 @@ public class JwkSetEndpointFilter extends OncePerRequestFilter {
 	}
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
 
 		if (matchesRequest(request)) {
-			response(response);
+			respond(response);
 		} else {
 			filterChain.doFilter(request, response);
 		}
 	}
 
-	private void response(HttpServletResponse response) throws IOException {
+	private void respond(HttpServletResponse response) throws IOException {
 		response.setContentType(APPLICATION_JSON_VALUE);
 		try (Writer writer = response.getWriter()) {
 			writer.write(this.jwkSet.toPublicJWKSet().toJSONObject().toJSONString());

@@ -51,7 +51,6 @@ import static sample.JwkSetEndpointFilter.DEFAULT_JWK_SET_URI;
 
 @TestInstance(Lifecycle.PER_CLASS)
 public class JwkSetEndpointFilterTests {
-
 	private JWK jwk;
 	private JWKSet jwkSet;
 	private JwkSetEndpointFilter filter;
