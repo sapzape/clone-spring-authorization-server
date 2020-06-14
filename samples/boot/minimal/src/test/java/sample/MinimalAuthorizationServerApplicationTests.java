@@ -17,16 +17,25 @@ package sample;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class MinimalAuthorizationServerApplicationTests {
+	private RestTemplate rest = new RestTemplate();
+
+	@LocalServerPort
+	private int serverPort;
 
 	@Test
-	public void loadContext(ApplicationContext context) {
-		assertThat(context).isNotNull();
+	void requestWhenNotAuthenticatedThenJwkSetEndpointStillAccessible() {
+		ResponseEntity<String> responseEntity = this.rest.getForEntity(
+				"http://localhost:" + this.serverPort + JwkSetEndpointFilter.DEFAULT_JWK_SET_URI, String.class);
+		assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 	}
-
 }
