@@ -66,7 +66,7 @@ public final class InMemoryOAuth2AuthorizationService implements OAuth2Authoriza
 
 	private boolean hasToken(OAuth2Authorization authorization, String token, TokenType tokenType) {
 		if (TokenType.AUTHORIZATION_CODE.equals(tokenType)) {
-			return token.equals(authorization.getAttributes().get(OAuth2ParameterNames.class.getName().concat(".CODE")));
+			return token.equals(authorization.getAttributes().get(OAuth2AuthorizationAttributeNames.CODE);
 		} else if (TokenType.ACCESS_TOKEN.equals(tokenType)) {
 			return authorization.getAccessToken() != null &&
 					authorization.getAccessToken().getTokenValue().equals(token);

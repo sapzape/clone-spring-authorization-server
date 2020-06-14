@@ -85,13 +85,13 @@ public class OAuth2AuthorizationTests {
 		OAuth2Authorization authorization = OAuth2Authorization.withRegisteredClient(REGISTERED_CLIENT)
 				.principalName(PRINCIPAL_NAME)
 				.accessToken(ACCESS_TOKEN)
-				.attribute(OAuth2ParameterNames.class.getName().concat(".CODE"), AUTHORIZATION_CODE)
+				.attribute(OAuth2AuthorizationAttributeNames.CODE, AUTHORIZATION_CODE)
 				.build();
 
 		assertThat(authorization.getRegisteredClientId()).isEqualTo(REGISTERED_CLIENT.getId());
 		assertThat(authorization.getPrincipalName()).isEqualTo(PRINCIPAL_NAME);
 		assertThat(authorization.getAccessToken()).isEqualTo(ACCESS_TOKEN);
 		assertThat(authorization.getAttributes()).containsExactly(
-				entry(OAuth2ParameterNames.class.getName().concat(".CODE"), AUTHORIZATION_CODE));
+				entry(OAuth2AuthorizationAttributeNames.CODE, AUTHORIZATION_CODE));
 	}
 }
